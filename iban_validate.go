@@ -29,7 +29,7 @@ func iban_isvalid(iban string) bool {
 	rune_iban := []rune(iban)
 	iban_length := len(rune_iban)
 	
-	if iban_length < 15 { return false }
+	if iban_length < 15 || iban_length > 33 { return false }
 	
 	country_code := iban[:2]
 
