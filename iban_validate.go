@@ -27,8 +27,11 @@ func iban_isvalid(iban string) bool {
 	iban = strings.ToLower(strings.TrimSpace(iban))
 
 	rune_iban := []rune(iban)
-	country_code := iban[:2]
 	iban_length := len(rune_iban)
+	
+	if iban_length < 15 { return false }
+	
+	country_code := iban[:2]
 
 	if (country_code == "eg" && iban_length != 29) || 
 	   (country_code == "it" && iban_length != 27) ||
