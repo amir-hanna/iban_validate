@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"iban_validate/yaml_reader"
+	"log"
 	"math/big"
 	"strconv"
 	"strings"
@@ -23,19 +25,37 @@ func main() {
 
 }
 
+func validate_country(country_code string, iban_length int) bool {
+	settings, err := yaml_reader.ReadYAML("settings.yaml")
+
+	if err != nil {
+		log.Fatalf("error: %v", err) // Logs the error and exits the program
+	}
+
+	if iban_length < settings.IBAN_rules.MinLength || iban_length > settings.IBAN_rules.MaxLength {
+		fmt.Println("iban length is incorrect.")
+		return false
+	}
+
+	for _, country := range settings.Countries {
+		if strings.ToLower(country.Prefix) == country_code && country.Length != iban_length {
+			fmt.Println("iban length is incorrect for:", country.Name)
+			return false
+		}
+	}
+
+	return true
+}
+
 func iban_isvalid(iban string) bool {
 	iban = strings.ToLower(strings.TrimSpace(iban))
 
 	rune_iban := []rune(iban)
 	iban_length := len(rune_iban)
-	
-	if iban_length < 15 || iban_length > 33 { return false }
-	
+
 	country_code := iban[:2]
 
-	if (country_code == "eg" && iban_length != 29) || 
-	   (country_code == "it" && iban_length != 27) ||
-	   (country_code == "no" && iban_length != 15) {
+	if !validate_country(country_code, iban_length) {
 		return false
 	}
 

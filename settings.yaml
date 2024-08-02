@@ -1,0 +1,19 @@
+iban_rules:
+
+  min_length: 15
+  max_length: 33
+
+
+countries:
+
+  - name: Norway
+    prefix: no
+    length: 15
+
+  - name: Italy
+    prefix: it
+    length: 27
+
+  - name: Egypt
+    prefix: eg
+    length: 29
