@@ -1,7 +1,7 @@
 # iban_validate
 IBAN validation
 
-Source code as well as binaries for Windows and Linux included
+Source code and binary for Windows
 
 iban_validate.go           source file
 settings.yaml              country specific iban rules and general iban rules.
