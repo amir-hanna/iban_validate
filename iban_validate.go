@@ -75,10 +75,8 @@ func iban_isvalid(iban string) bool {
 	n.SetString(strings.Join(str_num, ""), 10)
 	//fmt.Println(n.Mod(n, big.NewInt(97)))
 
-	if n.Mod(n, big.NewInt(97)).Cmp(big.NewInt(1)) == 0 {
-		return true
-	}
-	return false
+	return n.Mod(n, big.NewInt(97)).Cmp(big.NewInt(1)) == 0
+
 	// GB82WEST12345698765432
 	// gb82WeSt12345698765432
 }
